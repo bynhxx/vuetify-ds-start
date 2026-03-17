@@ -1,0 +1,163 @@
+{
+  "spacing": {
+    "0": {
+      "$value": "0px",
+      "$type": "dimension",
+      "$description": "0px"
+    },
+    "1": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "1 × 4px = 4px"
+    },
+    "2": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "2 × 4px = 8px"
+    },
+    "3": {
+      "$value": "12px",
+      "$type": "dimension",
+      "$description": "3 × 4px = 12px"
+    },
+    "4": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "4 × 4px = 16px"
+    },
+    "5": {
+      "$value": "20px",
+      "$type": "dimension",
+      "$description": "5 × 4px = 20px"
+    },
+    "6": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "6 × 4px = 24px"
+    },
+    "8": {
+      "$value": "32px",
+      "$type": "dimension",
+      "$description": "8 × 4px = 32px"
+    },
+    "10": {
+      "$value": "40px",
+      "$type": "dimension",
+      "$description": "10 × 4px = 40px"
+    },
+    "12": {
+      "$value": "48px",
+      "$type": "dimension",
+      "$description": "12 × 4px = 48px"
+    },
+    "16": {
+      "$value": "64px",
+      "$type": "dimension",
+      "$description": "16 × 4px = 64px"
+    },
+    "20": {
+      "$value": "80px",
+      "$type": "dimension",
+      "$description": "20 × 4px = 80px"
+    },
+    "24": {
+      "$value": "96px",
+      "$type": "dimension",
+      "$description": "24 × 4px = 96px"
+    }
+  },
+  "borderRadius": {
+    "none": {
+      "$value": "0px",
+      "$type": "dimension"
+    },
+    "sm": {
+      "$value": "4px",
+      "$type": "dimension"
+    },
+    "md": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "$border-radius-root — base do DS (8px)"
+    },
+    "lg": {
+      "$value": "16px",
+      "$type": "dimension"
+    },
+    "xl": {
+      "$value": "24px",
+      "$type": "dimension"
+    },
+    "full": {
+      "$value": "9999px",
+      "$type": "dimension"
+    }
+  },
+  "typography": {
+    "h1": {
+      "$value": "96px",
+      "$type": "dimension",
+      "$description": "6rem — weight: 300 / lh: 1"
+    },
+    "h2": {
+      "$value": "60px",
+      "$type": "dimension",
+      "$description": "3.75rem — weight: 300 / lh: 1"
+    },
+    "h3": {
+      "$value": "48px",
+      "$type": "dimension",
+      "$description": "3rem — weight: 400 / lh: 1.05"
+    },
+    "h4": {
+      "$value": "34px",
+      "$type": "dimension",
+      "$description": "2.125rem — weight: 400 / lh: 1.175"
+    },
+    "h5": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "1.5rem — weight: 400 / lh: 1.333"
+    },
+    "h6": {
+      "$value": "20px",
+      "$type": "dimension",
+      "$description": "1.25rem — weight: 500 / lh: 1.6"
+    },
+    "subtitle1": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "1rem — weight: 400 / lh: 1.75"
+    },
+    "subtitle2": {
+      "$value": "14px",
+      "$type": "dimension",
+      "$description": "0.875rem — weight: 500 / lh: 1.6"
+    },
+    "body1": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "1rem — weight: 400 / lh: 1.5"
+    },
+    "body2": {
+      "$value": "14px",
+      "$type": "dimension",
+      "$description": "0.875rem — weight: 400 / lh: 1.425"
+    },
+    "button": {
+      "$value": "14px",
+      "$type": "dimension",
+      "$description": "0.875rem — weight: 500 / lh: 2.6"
+    },
+    "caption": {
+      "$value": "12px",
+      "$type": "dimension",
+      "$description": "0.75rem — weight: 400 / lh: 1.667"
+    },
+    "overline": {
+      "$value": "12px",
+      "$type": "dimension",
+      "$description": "0.75rem — weight: 500 / lh: 2.667"
+    }
+  }
+}
