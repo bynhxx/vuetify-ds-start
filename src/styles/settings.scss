@@ -1,5 +1,25 @@
-// Vuetify SCSS variable overrides
-// https://vuetifyjs.com/en/features/sass-variables/
+// Vuetify SCSS variable overrides — Fase 2
+// Fonte de verdade: src/tokens/radius.ts e src/tokens/typography.ts
+//
+// ATENÇÃO: Breakpoints alterados aqui DEVEM ser sincronizados com
+//   display.thresholds em plugins/vuetify.ts (ver AUDIT.md §7.3)
 
-// $body-font-family: 'Roboto', sans-serif;
-// $border-radius-root: 4px;
+// --- Tipografia ---
+$body-font-family:    'Inter', sans-serif;
+$heading-font-family: 'Inter', sans-serif;
+$font-size-root:      1rem;
+$line-height-root:    1.5;
+
+// --- Border Radius ---
+// md=8px é o novo $border-radius-root do DS
+// Escala derivada automaticamente pelo Vuetify:
+//   rounded-sm:  4px  ($border-radius-root * 0.5)
+//   rounded:     8px  ($border-radius-root)
+//   rounded-lg: 16px  ($border-radius-root * 2)
+//   rounded-xl: 48px  ($border-radius-root * 6)
+$border-radius-root: 8px;
+
+// --- Espaçamento ---
+// Mantém o padrão 4px do Vuetify (alinhado com spacingTokens.base)
+// Alterar aqui recalcula TODA a escala: ma-*, pa-*, ga-*, grid-gutter, etc.
+$spacer: 4px;
