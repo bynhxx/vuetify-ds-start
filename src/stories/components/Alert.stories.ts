@@ -1,55 +1,51 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
-const meta = {
+const meta: Meta = {
   title: 'Components/Alert',
-  tags: ['autodocs'],
   argTypes: {
-    type: {
-      control: 'select',
-      options: ['success', 'warning', 'error', 'info'],
-      description: 'Tipo semântico do alerta',
-    },
-    variant: {
-      control: 'select',
-      options: ['tonal', 'outlined', 'elevated', 'flat', 'text'],
-      description: 'Variante visual',
-    },
-    title: { control: 'text', description: 'Título opcional' },
-    text: { control: 'text', description: 'Mensagem do alerta' },
-    closable: { control: 'boolean', description: 'Mostra botão de fechar' },
-    icon: { control: 'text', description: 'Ícone personalizado (mdi-*)' },
+    type:     { control: 'select', options: ['success', 'warning', 'error', 'info'] },
+    variant:  { control: 'select', options: ['tonal', 'outlined', 'elevated', 'flat', 'text'] },
+    title:    { control: 'text' },
+    text:     { control: 'text' },
+    closable: { control: 'boolean' },
   },
-  args: {
-    type: 'info',
-    variant: 'tonal',
-    title: '',
-    text: 'Este é um alerta informativo. Clique para dispensar.',
-    closable: false,
-    icon: undefined,
-  },
-  render: (args: Record<string, unknown>) => ({
-    setup: () => ({ args }),
-    template: `
-      <v-alert
-        :type="args.type"
-        :variant="args.variant"
-        :title="args.title || undefined"
-        :text="args.text"
-        :closable="args.closable"
-        :icon="args.icon || undefined"
-      />
-    `,
-  }),
-} satisfies Meta
+}
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    type:     'info',
+    variant:  'tonal',
+    title:    '',
+    text:     'Este é um alerta informativo.',
+    closable: false,
+  },
+  render: (args) => ({
+    setup() {
+      return {
+        type:     String(args.type    ?? 'info'),
+        variant:  String(args.variant ?? 'tonal'),
+        title:    args.title   ? String(args.title)  : undefined,
+        text:     String(args.text    ?? ''),
+        closable: Boolean(args.closable),
+      }
+    },
+    template: `
+      <v-alert
+        :type="type"
+        :variant="variant"
+        :title="title"
+        :text="text"
+        :closable="closable"
+      />
+    `,
+  }),
+}
 
 export const Types: Story = {
   name: 'Types',
-  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div style="display:flex;flex-direction:column;gap:12px;">
@@ -64,7 +60,6 @@ export const Types: Story = {
 
 export const Variants: Story = {
   name: 'Variants',
-  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div style="display:flex;flex-direction:column;gap:12px;">
@@ -80,7 +75,6 @@ export const Variants: Story = {
 
 export const WithTitle: Story = {
   name: 'With Title',
-  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div style="display:flex;flex-direction:column;gap:12px;">
@@ -92,7 +86,7 @@ export const WithTitle: Story = {
           text="Sua sessão expirará em 5 minutos. Salve seu trabalho." />
         <v-alert type="error" variant="outlined"
           title="Falha na conexão"
-          text="Não foi possível conectar ao servidor. Tente novamente em instantes." />
+          text="Não foi possível conectar ao servidor. Tente novamente." />
       </div>
     `,
   }),
@@ -100,19 +94,17 @@ export const WithTitle: Story = {
 
 export const WithActions: Story = {
   name: 'With Actions',
-  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div style="display:flex;flex-direction:column;gap:12px;">
         <v-alert type="warning" variant="tonal" closable
           title="Atualização disponível"
-          text="Uma nova versão está disponível. Atualize para acessar novos recursos."
+          text="Uma nova versão está disponível."
         >
           <template #append>
             <v-btn variant="text" color="warning" size="small">Atualizar</v-btn>
           </template>
         </v-alert>
-
         <v-alert type="info" variant="tonal" closable
           text="Bem-vindo ao Design System. Explore os tokens e componentes." />
       </div>
@@ -122,16 +114,15 @@ export const WithActions: Story = {
 
 export const CustomIcon: Story = {
   name: 'Custom Icon',
-  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div style="display:flex;flex-direction:column;gap:12px;">
-        <v-alert type="info" variant="tonal" icon="mdi-lightbulb-outline"
-          text="Dica: use tokens semânticos para manter a consistência visual." />
+        <v-alert type="info"    variant="tonal" icon="mdi-lightbulb-outline"
+          text="Dica: use tokens semânticos para manter consistência visual." />
         <v-alert type="success" variant="tonal" icon="mdi-check-circle"
-          text="Dados sincronizados com o Figma via Tokens Studio." />
+          text="Tokens sincronizados com o Figma via Tokens Studio." />
         <v-alert type="warning" variant="tonal" :icon="false"
-          text="Alerta sem ícone — icon=false remove o ícone padrão." />
+          text="Alerta sem ícone — :icon=false remove o ícone padrão." />
       </div>
     `,
   }),

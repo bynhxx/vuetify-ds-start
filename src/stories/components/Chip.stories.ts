@@ -1,64 +1,62 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
-const meta = {
+const meta: Meta = {
   title: 'Components/Chip',
-  tags: ['autodocs'],
   argTypes: {
-    color: {
-      control: 'select',
-      options: ['primary', 'secondary', 'success', 'warning', 'error', 'info'],
-      description: 'Cor semântica',
-    },
-    variant: {
-      control: 'select',
-      options: ['elevated', 'outlined', 'tonal', 'flat', 'text'],
-      description: 'Variante visual',
-    },
-    size: {
-      control: 'select',
-      options: ['x-small', 'small', 'default', 'large'],
-    },
-    closable: { control: 'boolean', description: 'Mostra botão de fechar' },
-    disabled: { control: 'boolean' },
-    label: { control: 'text', description: 'Texto do chip' },
-    prependIcon: { control: 'text', description: 'Ícone prepend (mdi-*)' },
+    color:       { control: 'select', options: ['primary','secondary','success','warning','error','info'] },
+    variant:     { control: 'select', options: ['elevated','outlined','tonal','flat','text'] },
+    size:        { control: 'select', options: ['x-small','small','default','large'] },
+    closable:    { control: 'boolean' },
+    disabled:    { control: 'boolean' },
+    label:       { control: 'text' },
+    prependIcon: { control: 'text' },
   },
-  args: {
-    color: 'primary',
-    variant: 'tonal',
-    size: 'default',
-    closable: false,
-    disabled: false,
-    label: 'Chip',
-    prependIcon: '',
-  },
-  render: (args: Record<string, unknown>) => ({
-    setup: () => ({ args }),
-    template: `
-      <v-chip
-        :color="args.color"
-        :variant="args.variant"
-        :size="args.size"
-        :closable="args.closable"
-        :disabled="args.disabled"
-        :prepend-icon="args.prependIcon || undefined"
-      >{{ args.label }}</v-chip>
-    `,
-  }),
-} satisfies Meta
+}
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    color:       'primary',
+    variant:     'tonal',
+    size:        'default',
+    closable:    false,
+    disabled:    false,
+    label:       'Chip',
+    prependIcon: '',
+  },
+  render: (args) => ({
+    setup() {
+      return {
+        color:       String(args.color       ?? 'primary'),
+        variant:     String(args.variant     ?? 'tonal'),
+        size:        String(args.size        ?? 'default'),
+        closable:    Boolean(args.closable),
+        disabled:    Boolean(args.disabled),
+        label:       String(args.label       ?? 'Chip'),
+        prependIcon: args.prependIcon ? String(args.prependIcon) : undefined,
+      }
+    },
+    template: `
+      <v-chip
+        :color="color"
+        :variant="variant"
+        :size="size"
+        :closable="closable"
+        :disabled="disabled"
+        :prepend-icon="prependIcon"
+      >{{ label }}</v-chip>
+    `,
+  }),
+}
 
 export const Colors: Story = {
   name: 'Colors',
-  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div>
-        <div class="text-caption text-medium-emphasis mb-3">Tonal</div>
+        <div style="font-size:11px;opacity:.6;margin-bottom:8px;">Tonal</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
           <v-chip variant="tonal" color="primary">Primary</v-chip>
           <v-chip variant="tonal" color="secondary">Secondary</v-chip>
@@ -67,7 +65,7 @@ export const Colors: Story = {
           <v-chip variant="tonal" color="error">Error</v-chip>
           <v-chip variant="tonal" color="info">Info</v-chip>
         </div>
-        <div class="text-caption text-medium-emphasis mb-3">Elevated</div>
+        <div style="font-size:11px;opacity:.6;margin-bottom:8px;">Elevated</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
           <v-chip color="primary">Primary</v-chip>
           <v-chip color="secondary">Secondary</v-chip>
@@ -76,7 +74,7 @@ export const Colors: Story = {
           <v-chip color="error">Error</v-chip>
           <v-chip color="info">Info</v-chip>
         </div>
-        <div class="text-caption text-medium-emphasis mb-3">Outlined</div>
+        <div style="font-size:11px;opacity:.6;margin-bottom:8px;">Outlined</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;">
           <v-chip variant="outlined" color="primary">Primary</v-chip>
           <v-chip variant="outlined" color="secondary">Secondary</v-chip>
@@ -92,16 +90,15 @@ export const Colors: Story = {
 
 export const WithIcons: Story = {
   name: 'With Icons',
-  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div style="display:flex;flex-wrap:wrap;gap:8px;">
-        <v-chip color="primary" prepend-icon="mdi-account">Perfil</v-chip>
-        <v-chip color="success" prepend-icon="mdi-check-circle" variant="tonal">Aprovado</v-chip>
-        <v-chip color="error"   prepend-icon="mdi-alert-circle" variant="tonal">Erro</v-chip>
-        <v-chip color="warning" prepend-icon="mdi-clock-outline" variant="tonal">Pendente</v-chip>
-        <v-chip color="info"    prepend-icon="mdi-information"  variant="outlined">Info</v-chip>
-        <v-chip color="secondary" append-icon="mdi-chevron-down" variant="tonal">Dropdown</v-chip>
+        <v-chip color="primary"   prepend-icon="mdi-account">Perfil</v-chip>
+        <v-chip color="success"   prepend-icon="mdi-check-circle"  variant="tonal">Aprovado</v-chip>
+        <v-chip color="error"     prepend-icon="mdi-alert-circle"  variant="tonal">Erro</v-chip>
+        <v-chip color="warning"   prepend-icon="mdi-clock-outline" variant="tonal">Pendente</v-chip>
+        <v-chip color="info"      prepend-icon="mdi-information"   variant="outlined">Info</v-chip>
+        <v-chip color="secondary" append-icon="mdi-chevron-down"   variant="tonal">Dropdown</v-chip>
       </div>
     `,
   }),
@@ -109,15 +106,14 @@ export const WithIcons: Story = {
 
 export const Closable: Story = {
   name: 'Closable',
-  parameters: { controls: { disable: true } },
   render: () => ({
     data() {
       return {
         chips: [
-          { label: 'Vue 3', color: 'primary' },
-          { label: 'Vuetify', color: 'secondary' },
-          { label: 'TypeScript', color: 'info' },
-          { label: 'Vite', color: 'success' },
+          { label: 'Vue 3',       color: 'primary'   },
+          { label: 'Vuetify',     color: 'secondary' },
+          { label: 'TypeScript',  color: 'info'      },
+          { label: 'Vite',        color: 'success'   },
         ],
       }
     },
@@ -126,7 +122,9 @@ export const Closable: Story = {
     },
     template: `
       <div>
-        <div class="text-caption text-medium-emphasis mb-3">Clique no × para remover</div>
+        <div style="font-size:11px;opacity:.6;margin-bottom:8px;">
+          Clique no × para remover
+        </div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;">
           <v-chip
             v-for="(chip, i) in chips"
@@ -137,8 +135,9 @@ export const Closable: Story = {
             @click:close="remove(i)"
           >{{ chip.label }}</v-chip>
         </div>
-        <div v-if="chips.length === 0" class="text-caption text-medium-emphasis mt-4">
-          Todos os chips foram removidos.
+        <div v-if="chips.length === 0"
+          style="font-size:12px;opacity:.5;margin-top:12px;">
+          Todos removidos.
         </div>
       </div>
     `,
@@ -147,7 +146,6 @@ export const Closable: Story = {
 
 export const Sizes: Story = {
   name: 'Sizes',
-  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div style="display:flex;align-items:center;flex-wrap:wrap;gap:12px;">
@@ -162,37 +160,30 @@ export const Sizes: Story = {
 
 export const AsFilters: Story = {
   name: 'As Filters',
-  parameters: { controls: { disable: true } },
   render: () => ({
     data() {
       return {
-        filters: [
-          { label: 'Todos', active: true },
-          { label: 'Cores', active: false },
-          { label: 'Tipografia', active: false },
-          { label: 'Espaçamento', active: false },
-          { label: 'Componentes', active: false },
-        ],
+        active: 0,
+        filters: ['Todos','Cores','Tipografia','Espaçamento','Componentes'],
       }
     },
     methods: {
-      toggle(i: number) {
-        const f = (this as any).filters
-        f.forEach((_: unknown, idx: number) => { f[idx].active = idx === i })
-      },
+      toggle(i: number) { (this as any).active = i },
     },
     template: `
       <div>
-        <div class="text-caption text-medium-emphasis mb-3">Chips como filtros (toggle)</div>
+        <div style="font-size:11px;opacity:.6;margin-bottom:8px;">
+          Toggle de filtros
+        </div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;">
           <v-chip
             v-for="(f, i) in filters"
-            :key="f.label"
-            :variant="f.active ? 'elevated' : 'tonal'"
-            :color="f.active ? 'primary' : 'default'"
-            @click="toggle(i)"
+            :key="f"
+            :variant="active === i ? 'elevated' : 'tonal'"
+            :color="active === i ? 'primary' : undefined"
             style="cursor:pointer"
-          >{{ f.label }}</v-chip>
+            @click="toggle(i)"
+          >{{ f }}</v-chip>
         </div>
       </div>
     `,
