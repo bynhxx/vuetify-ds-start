@@ -8,7 +8,8 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore",
-    "tokens:build": "tsx style-dictionary.config.ts"
+    "tokens:build": "tsx style-dictionary.config.ts",
+    "figma:sync": "tsx scripts/sync-figma-tokens.ts"
   },
   "dependencies": {
     "@mdi/font": "7.4.47",
