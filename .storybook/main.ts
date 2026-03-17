@@ -1,6 +1,6 @@
 import type { StorybookConfig } from '@storybook/vue3-vite'
-import { fileURLToPath } from 'node:url'
 import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
 
@@ -16,19 +16,20 @@ const config: StorybookConfig = {
     options: {},
   },
 
+  /**
+   * viteFinal: NÃO inclui vite-plugin-vuetify aqui.
+   *
+   * Motivo: vite-plugin-vuetify gera módulos virtuais
+   * (virtual:__void__, virtual:plugin-vuetify:styles/*) que o servidor
+   * de desenvolvimento do Storybook não consegue resolver, causando
+   * ERR_ABORTED 404 no browser.
+   *
+   * No Storybook isso é desnecessário porque:
+   *  1. Estilos: importados globalmente via 'vuetify/styles' no preview.ts
+   *  2. Componentes: registrados globalmente via app.use(vuetify) no setup()
+   *  3. Tree-shaking: não se aplica a um ambiente de desenvolvimento
+   */
   async viteFinal(config) {
-    const { default: vuetify } = await import('vite-plugin-vuetify')
-
-    config.plugins = [
-      ...(config.plugins ?? []),
-      vuetify({
-        autoImport: true,
-        // 'none' evita o módulo virtual SASS no contexto do Storybook
-        // (os estilos base são importados via 'vuetify/styles' no preview.ts)
-        styles: 'none',
-      }),
-    ]
-
     config.resolve = {
       ...config.resolve,
       alias: {
