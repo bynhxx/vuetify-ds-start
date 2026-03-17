@@ -1,7 +1,8 @@
-import type { Preview } from '@storybook/vue3-vite'
 import { setup } from '@storybook/vue3-vite'
-import { withThemeByDataAttribute } from '@storybook/addon-themes'
+import type { Preview } from '@storybook/vue3-vite'
 import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
@@ -9,8 +10,13 @@ import '../src/styles/tokens.css'
 import { lightTheme } from '../src/themes/light'
 import { darkTheme } from '../src/themes/dark'
 
-// ── Vuetify instance ──────────────────────────────────────────────────────────
+// ── Vuetify com todos os componentes e diretivas registrados explicitamente ───
+// Necessário no Storybook porque o vite-plugin-vuetify (que faz o registro
+// automático na app principal) não é usado no viteFinal por gerar
+// módulos virtuais incompatíveis com o servidor do Storybook.
 const vuetify = createVuetify({
+  components,
+  directives,
   theme: {
     defaultTheme: 'light',
     themes: { light: lightTheme, dark: darkTheme },
@@ -23,28 +29,11 @@ const vuetify = createVuetify({
   icons: { defaultSet: 'mdi', aliases, sets: { mdi } },
 })
 
-// Registra Vuetify como plugin global em todas as stories
 setup((app) => app.use(vuetify))
 
-// ── Decorator: wrap every story in <v-app :theme="..."> ────────────────────────
-const withVuetifyTheme = (Story: any, context: any) => ({
-  components: { Story },
-  setup() {
-    return { theme: context.globals.theme || 'light' }
-  },
-  template: `
-    <v-app :theme="theme">
-      <v-main>
-        <v-container fluid class="pa-6">
-          <Story />
-        </v-container>
-      </v-main>
-    </v-app>
-  `,
-})
+// ── Preview ───────────────────────────────────────────────────────────────────
 
 const preview: Preview = {
-  // globalTypes registra o toolbar de tema na UI do Storybook
   globalTypes: {
     theme: {
       name: 'Theme',
@@ -63,18 +52,17 @@ const preview: Preview = {
   },
 
   decorators: [
-    // Aplica data-attribute no container (compatibilidade Tokens Studio)
-    withThemeByDataAttribute({
-      themes: { light: 'light', dark: 'dark' },
-      defaultTheme: 'light',
-      attributeName: 'data-sb-theme',
+    (Story, context) => ({
+      components: { Story },
+      setup() {
+        return { theme: context.globals.theme || 'light' }
+      },
+      template: '<v-app :theme="theme"><v-main><Story /></v-main></v-app>',
     }),
-    // Wraps stories em <v-app> com o tema selecionado
-    withVuetifyTheme,
   ],
 
   parameters: {
-    backgrounds: { disable: true },  // Vuetify gerencia backgrounds via tema
+    backgrounds: { disable: true },
     controls: {
       matchers: {
         color: /(background|color)$/i,
